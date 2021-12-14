@@ -1,40 +1,47 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import { positions, Provider } from "react-alert";
-import AlertMUITemplate from "react-alert-template-mui"
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { positions, Provider as AlertProvider } from "react-alert";
+import AlertMUITemplate from "react-alert-template-mui";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import rootReducer from "./utils/reducers";
 
-//import './App.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import "tailwindcss/dist/base.css";
-import './assets/scss/style.scss';
-import dotenv from 'dotenv';
+import "./assets/scss/style.scss";
+import dotenv from "dotenv";
 
-import { ApolloProvider } from 'react-apollo';
-import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from "react-apollo";
+import ApolloClient from "apollo-boost";
 
 dotenv.config();
 
+const store = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
 const apollo_client = new ApolloClient({
-  uri: process.env.REACT_APP_GCMS_URL
+  uri: process.env.REACT_APP_GCMS_URL,
 });
 
 const history = createBrowserHistory();
 const options = {
-  position: positions.MIDDLE
+  position: positions.MIDDLE,
 };
 ReactDOM.render(
   <Router history={history}>
-    <Provider template={AlertMUITemplate} {...options}>
-    <ApolloProvider client={ apollo_client }>
-      <App />
-    </ApolloProvider>
+    <Provider store={store}>
+      <AlertProvider template={AlertMUITemplate} {...options}>
+        <ApolloProvider client={apollo_client}>
+          <App />
+        </ApolloProvider>
+      </AlertProvider>
     </Provider>
   </Router>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

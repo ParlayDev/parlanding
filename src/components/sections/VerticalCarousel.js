@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import Slide from "./Slide";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 const Wrapper = styled.div`
   position: relative;
@@ -36,12 +37,16 @@ function mod(a, b) {
 }
 
 class VerticalCarousel extends React.Component {
-  state = {
-    index: 0,
-    goToSlide: null,
-    prevPropsGoToSlide: 0,
-    newSlide: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      index: 0,
+      goToSlide: null,
+      prevPropsGoToSlide: 0,
+      newSlide: false,
+    };
+  }
 
   componentDidMount = () => {
     document.addEventListener("keydown", (event) => {
@@ -84,6 +89,12 @@ class VerticalCarousel extends React.Component {
       index: this.modBySlidesLength(this.state.index + direction),
       goToSlide: null,
     });
+    if (direction === 1) {
+      this.props.nextbet();
+    }
+    if (direction === -1) {
+      this.props.prevbet();
+    }
   };
 
   clampOffsetRadius(offsetRadius) {
@@ -146,4 +157,9 @@ class VerticalCarousel extends React.Component {
   }
 }
 
-export default VerticalCarousel;
+const mapDispatchToProps = (dispatch) => ({
+  nextbet: () => dispatch({ type: "NEXTBET" }),
+  prevbet: () => dispatch({ type: "PREVBET" }),
+});
+
+export default connect(null, mapDispatchToProps)(VerticalCarousel);

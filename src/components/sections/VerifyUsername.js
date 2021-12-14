@@ -91,7 +91,7 @@ const VerifyUsername = () => {
   };
   return (
     <div>
-      <FormContainer>
+      <FormContainer className="shadow">
         {!action ? (
           <Form onSubmit={onVerifySubmit}>
             <Input

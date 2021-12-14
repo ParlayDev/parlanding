@@ -1,27 +1,43 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import VerticalCarousel from "./VerticalCarousel";
 import { config } from "react-spring";
-
-let goToSlide = 0;
-let offsetRadius = 8;
-let showNavigation = false;
-let vcconfig = config.slow;
+import { useSelector, useDispatch } from "react-redux";
+import { kills } from "../../utils/actions/KillsActions";
 
 const Bets = (props) => {
+  const dispatch = useDispatch();
+  const killz = useSelector((state) => state.kills);
   const BetsBuilder = (bets) => {
     const arr = [];
     bets.forEach((bet, index) => {
       arr.push({
         key: index,
         content: (
-          <section tw="flex justify-between bg-gray-800 border-2 border-gray-900 h-full w-full">
+          <section tw="flex justify-between bg-gray-800 border-2 border-gray-900 h-full">
             <img tw="w-1/4" src={bet.image} alt="Valorant logo" />
             <section tw="flex flex-col justify-between w-1/2 p-2 border-r-2 border-gray-900 overflow-hidden items-center">
-              <h3 tw="flex h-1/4">{bet.bet}</h3>
+              <h3 tw="flex">{bet.bet}</h3>
               <div tw="flex h-3/4">{bet.betdescription}</div>
+
+              <div tw="w-full">
+                <input
+                  tw="w-full"
+                  type="range"
+                  id="volume"
+                  name="volume"
+                  min="3"
+                  max="12"
+                  onChange={(e) => {
+                    dispatch(kills(e.target.value));
+                  }}
+                />
+              </div>
             </section>
             <section tw="flex py-2">
-              <div tw="flex m-2">min</div>
+              <div tw="flex flex-col m-2">
+                <div>Kills</div>
+                <div>{killz}</div>
+              </div>
               <div tw="flex m-2">max</div>
             </section>
             <section tw="flex py-2 bg-gray-700">
@@ -49,9 +65,9 @@ const Bets = (props) => {
   return (
     <VerticalCarousel
       slides={BetsBuilder(props.betData)}
-      offsetRadius={offsetRadius}
-      showNavigation={showNavigation}
-      animationConfig={vcconfig}
+      offsetRadius={8}
+      showNavigation={false}
+      animationConfig={config.slow}
     />
   );
 };

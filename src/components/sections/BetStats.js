@@ -13,8 +13,8 @@ const BetStats = () => (
       },
     ]}
     layout={{
-      autosize: false,
-      width: 1000,
+      autosize: true,
+      width: 500,
       title: "Win Streak",
       plot_bgcolor: "transparent",
       paper_bgcolor: "transparent",
