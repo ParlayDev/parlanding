@@ -14,6 +14,7 @@ import Posts from "./components/sections/Posts";
 import Home from "./views/Home";
 import Blog3 from "./views/Blog3";
 import AboutUs from "./views/AboutUs";
+import GeoTest from "./views/GeoTest";
 import ContactUs from "./views/ContactUs";
 import SignUp from "./views/SignUp";
 import Login from "./views/Login";
@@ -54,7 +55,13 @@ const App = () => {
             path="/about"
             component={AboutUs}
             layout={LayoutToMain}
-          />
+           />
+           <AppRoute
+             exact
+             path="/geotest"
+             component={GeoTest}
+             layout={LayoutToMain}
+           />
           <AppRoute
             exact
             path="/contact"

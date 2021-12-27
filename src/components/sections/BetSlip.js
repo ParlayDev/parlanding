@@ -44,11 +44,14 @@ function BetSlip(props) {
     <main tw="flex flex-col bg-gray-900 rounded-sm w-full">
       <div>WAGER SLIP</div>
       <div>
-        {solo === undefined
-          ? "loading"
-          : console.log(
-              indexpicker(team[1])[indexpicker(bet[1]) + (kills - 3)]
-            )}
+        {
+          // (solo === undefined
+          //   ? "loading"
+          //   : console.log(
+          //       indexpicker(team[1])[indexpicker(bet[1]) + (kills - 3)]
+          //     ),
+          console.log(solo)
+        }
       </div>
 
       <div tw="flex justify-center border-t-2 border-b-2 border-white py-2">
